@@ -1,0 +1,7 @@
+AGENTS.md
+CURRENT_TASK.md
+opencode.json
+docs
+__pycache__/
+*.pyc
+config/remember.txt

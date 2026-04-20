@@ -1,0 +1,21 @@
+[project]
+name = "starloco-launcher"
+version = "0.1.0"
+description = "Launcher for Dofus Retro"
+requires-python = ">=3.10"
+dependencies = ["customtkinter"]
+
+[project.optional-dependencies]
+dev = ["ruff"]
+gui = []
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "DTZ", "T10", "EM", "ISC", "ICN", "G", "PIE", "T20", "PT", "Q", "RET", "SIM", "TID", "ARG", "PTH", "ERA", "PL", "TRY", "NPY", "RSE", "RUF"]
+ignore = ["E501", "PLR2004", "TRY401", "I001"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
