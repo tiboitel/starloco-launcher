@@ -43,6 +43,7 @@ class LoginWindow(ctk.CTk):
         self.title("Starloco")
         self.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
         self.resizable(False, False)
+        self.overrideredirect(True)
 
         ctk.set_appearance_mode("dark")
 
@@ -53,6 +54,16 @@ class LoginWindow(ctk.CTk):
         self._drag_start_x = 0
         self._drag_start_y = 0
         self._zaap = ZaapAuth()
+
+        # Wrapper frame with rounded corners
+        self._wrapper = ctk.CTkFrame(
+            self,
+            fg_color=BG_ROOT,
+            corner_radius=8,
+            border_color=BORDER,
+            border_width=2,
+        )
+        self._wrapper.pack(fill="both", expand=True)
 
         try:
             self._zaap.start()
@@ -69,7 +80,7 @@ class LoginWindow(ctk.CTk):
     def _build_ui(self) -> None:
         self._build_header()
 
-        self._main_container = ctk.CTkFrame(self, fg_color="transparent")
+        self._main_container = ctk.CTkFrame(self._wrapper, fg_color="transparent")
         self._main_container.pack(fill="both", expand=True)
 
         self._show_login_panel()
@@ -77,13 +88,17 @@ class LoginWindow(ctk.CTk):
     def _build_header(self) -> None:
         """Build the warm golden header bar."""
         header = ctk.CTkFrame(
-            self,
+            self._wrapper,
             fg_color=ACCENT_END,
             height=52,
             corner_radius=0,
         )
         header.pack(fill="x")
         header.pack_propagate(False)
+
+        # Make header draggable since we removed OS title bar
+        header.bind("<Button-1>", self._on_drag_start)
+        header.bind("<B1-Motion>", self._on_drag_motion)
 
         ctk.CTkLabel(
             header,
@@ -136,6 +151,17 @@ class LoginWindow(ctk.CTk):
             font=("Trebuchet MS", 16),
             command=self.iconify,
         ).pack(side="right", padx=PAD_SM)
+
+    def _on_drag_start(self, event) -> None:
+        """Record starting position for window dragging."""
+        self._drag_start_x = event.x
+        self._drag_start_y = event.y
+
+    def _on_drag_motion(self, event) -> None:
+        """Move window based on drag motion."""
+        dx = event.x - self._drag_start_x
+        dy = event.y - self._drag_start_y
+        self.geometry(f"+{self.winfo_x() + dx}+{self.winfo_y() + dy}")
 
     def _show_login_panel(self) -> None:
         """Show the login panel with username, password, and PLAY button."""
