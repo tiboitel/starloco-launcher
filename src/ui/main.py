@@ -95,6 +95,21 @@ class LoginWindow(ctk.CTk):
         right_buttons = ctk.CTkFrame(header, fg_color="transparent")
         right_buttons.pack(side="right", padx=PAD_MD)
 
+        # Close button (packed first - appears rightmost)
+        ctk.CTkButton(
+            right_buttons,
+            text="✕",
+            width=36,
+            height=36,
+            fg_color="transparent",
+            text_color=TEXT_DARK,
+            hover_color=ERROR,
+            border_width=0,
+            font=("Trebuchet MS", 14),
+            command=self.quit,
+        ).pack(side="right", padx=PAD_SM)
+
+        # Settings button (packed second - appears middle)
         ctk.CTkButton(
             right_buttons,
             text="⚙",
@@ -108,6 +123,7 @@ class LoginWindow(ctk.CTk):
             command=self._toggle_config,
         ).pack(side="right", padx=PAD_SM)
 
+        # Minimize button (packed last - appears leftmost)
         ctk.CTkButton(
             right_buttons,
             text="_",
@@ -119,19 +135,6 @@ class LoginWindow(ctk.CTk):
             border_width=0,
             font=("Trebuchet MS", 16),
             command=self.iconify,
-        ).pack(side="right", padx=PAD_SM)
-
-        ctk.CTkButton(
-            right_buttons,
-            text="✕",
-            width=36,
-            height=36,
-            fg_color="transparent",
-            text_color=TEXT_DARK,
-            hover_color=ERROR,
-            border_width=0,
-            font=("Trebuchet MS", 14),
-            command=self.quit,
         ).pack(side="right", padx=PAD_SM)
 
     def _show_login_panel(self) -> None:
