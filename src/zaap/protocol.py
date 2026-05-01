@@ -55,7 +55,6 @@ def parse_message(data: bytes) -> ConnectMessage | AuthGameTokenMessage | None:
         if len(parts) < 2:
             msg = "connect requires at least 2 parts: connect <game_type> <version> [-1] [-1]"
             raise ProtocolError(msg)
-        # parts[0] = "connect", parts[1] = game_type (e.g., "retro"), parts[2] = version, parts[3] = -1, parts[4] = zaap_hash or -1
         game_type = parts[1] if len(parts) > 1 else ""
         zaap_hash = parts[4] if len(parts) > 4 and parts[4] != "-1" else ""
         return ConnectMessage(account_id="", game_type=game_type, zaap_hash=zaap_hash)
