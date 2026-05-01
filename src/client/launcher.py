@@ -31,13 +31,14 @@ def launch_game(game_path: str, zaap_port: int = 5559) -> None:
         "--gameRelease=main",
         "--instanceId=1",
         "--gameInstanceKey=starloco_forge",
-        "--disable-gpu",
-        "--disable-software-rasterizer",
     ]
 
     env = os.environ.copy()
 
     if sys.platform.startswith("linux"):
+        args.insert("--disable-gpu"),
+        args.insert("--disable-software-rasterizer"),
+
         env["ELECTRON_ENABLE_STACK_DUMPING"] = "1"
         logger.info("Linux detected, wrapping with wine")
         cmd = ["wine", *args]

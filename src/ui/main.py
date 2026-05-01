@@ -75,7 +75,6 @@ class LoginWindow(ctk.CTk):
         self._show_login_panel()
 
     def _build_header(self) -> None:
-        """Build the warm golden header bar."""
         header = ctk.CTkFrame(
             self,
             fg_color=ACCENT_END,
@@ -162,8 +161,12 @@ class LoginWindow(ctk.CTk):
             text_color=TEXT_LIGHT,
         ).pack(padx=PAD_LG, pady=(0, PAD_SM))
 
+        # Form wrapper for aligned inputs
+        form = ctk.CTkFrame(inner, fg_color="transparent")
+        form.pack(padx=PAD_LG)
+
         self._account = ctk.CTkEntry(
-            inner,
+            form,
             placeholder_text="Username",
             width=ENTRY_WIDTH,
             font=("Trebuchet MS", 13),
@@ -172,11 +175,11 @@ class LoginWindow(ctk.CTk):
             text_color=TEXT_DARK,
             placeholder_text_color=TEXT_MUTED,
         )
-        self._account.pack(padx=PAD_LG, pady=(0, PAD_MD))
+        self._account.pack(pady=(0, PAD_MD))
         self._account.bind("<Return>", lambda _: self._on_login())
 
         self._password = ctk.CTkEntry(
-            inner,
+            form,
             placeholder_text="Password",
             show="*",
             width=ENTRY_WIDTH,
@@ -186,18 +189,18 @@ class LoginWindow(ctk.CTk):
             text_color=TEXT_DARK,
             placeholder_text_color=TEXT_MUTED,
         )
-        self._password.pack(padx=PAD_LG, pady=(0, PAD_MD))
+        self._password.pack(pady=(0, PAD_MD))
         self._password.bind("<Return>", lambda _: self._on_login())
 
         self._remember = ctk.CTkCheckBox(
-            inner,
+            form,
             text="Remember me",
             font=("Trebuchet MS", 12),
             text_color=TEXT_LIGHT,
             fg_color=ACCENT_END,
             hover_color=BG_CONTENT,
         )
-        self._remember.pack(padx=PAD_LG, pady=(PAD_MD, 0))
+        self._remember.pack(anchor="w", pady=(PAD_MD, 0))
 
         if self._client_path:
             ctk.CTkLabel(
