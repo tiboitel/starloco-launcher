@@ -3,7 +3,7 @@ name = "starloco-launcher"
 version = "0.1.0"
 description = "Launcher for Dofus Retro"
 requires-python = ">=3.10"
-dependencies = ["customtkinter"]
+dependencies = ["customtkinter", "requests"]
 
 [project.optional-dependencies]
 dev = ["ruff"]
