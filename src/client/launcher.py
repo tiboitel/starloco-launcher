@@ -36,8 +36,8 @@ def launch_game(game_path: str, zaap_port: int = 5559) -> None:
     env = os.environ.copy()
 
     if sys.platform.startswith("linux"):
-        args.insert(0, "--disable-software-rasterizer")
-        args.insert(0, "--disable-gpu")
+        args.insert(len(args), "--disable-software-rasterizer")
+        args.insert(len(args), "--disable-gpu")
 
         env["ELECTRON_ENABLE_STACK_DUMPING"] = "1"
         logger.info("Linux detected, wrapping with wine")
